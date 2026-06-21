@@ -123,4 +123,9 @@ See `docs/architecture.md` for the full workflow diagram and human-in-the-loop c
 - [x] Kaggle training notebook (multi-task classifier, 3 heads)
 - [x] Inference (with zero-shot fallback) + Pulse Agent orchestration
 - [x] Architecture doc + diagram
-- [ ] Fine-tuned model trained on Kaggle and dropped into `models/` (your turn — run the new notebook)
+- [x] Fine-tuned model trained on Kaggle and installed in `models/`
+- [x] Out-of-distribution evaluation (`eval/`) + [evaluation report](EVALUATION_REPORT.md)
+- [x] End-to-end agent demo (`reports/pulse_2026-06-20.md`)
+- [ ] Final presentation deck (optional)
+
+> Note: the trained weights are git-ignored (268 MB). Re-create them by running `notebooks/train_ticket_classifier.ipynb` on Kaggle, or the agent will fall back to zero-shot automatically.
