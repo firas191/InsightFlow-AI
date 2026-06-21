@@ -76,7 +76,10 @@ def build_langchain_tools():
     so importing this module never hard-fails.
     """
     try:
-        from langchain.tools import StructuredTool
+        try:
+            from langchain_core.tools import StructuredTool
+        except ImportError:
+            from langchain.tools import StructuredTool
     except Exception:  # pragma: no cover - optional dep
         print("[tools] LangChain not installed — plain Python tools still available.")
         return []
@@ -101,3 +104,12 @@ def build_langchain_tools():
                         "Returns the saved file path.",
         ),
     ]
+
+
+def langchain_tool_map() -> dict:
+    """Return {tool_name: LangChain StructuredTool}. Empty if LangChain is unavailable.
+
+    The Pulse Agent invokes these via the LangChain tool interface (`tool.invoke`),
+    so the same capabilities are usable by an LLM-driven LangChain agent too.
+    """
+    return {t.name: t for t in build_langchain_tools()}

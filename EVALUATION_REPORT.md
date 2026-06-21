@@ -23,9 +23,9 @@ A three-round tuning process is documented in full, including a round that **reg
 | Multi-task classifier (trainable) | DistilBERT + 3 linear heads, fine-tuned on Kaggle GPU | Encoder models, fine-tuning, transfer learning |
 | Sentiment labels | Distilled from a pretrained teacher + targeted augmentation | Weak supervision, class imbalance |
 | Retrieval | Sentence-Transformers (MiniLM) embeddings + cosine search over historical cases | Embeddings, semantic search |
-| Summarisation | distilBART (encoder-decoder), with a structured fallback | Decoder / encoder-decoder summarisation |
+| Summarisation | Structured summary by default; optional distilBART (encoder-decoder) abstractive layer | Decoder / encoder-decoder summarisation |
 | Response drafting | Template grounded in the closest retrieved resolution | Safe, controllable text generation |
-| Orchestration + tools | Deterministic pipeline; capabilities exposed as LangChain tools | Multi-step workflows, agentic tool use |
+| Orchestration + tools | LangChain LCEL Runnable pipeline; side-effects via LangChain `StructuredTool.invoke` | Multi-step workflows, agentic tool use |
 | Routing & escalation | Rule-based team routing + sentiment/priority escalation | Connecting NLP to business logic |
 
 The pipeline runs immediately with a **zero-shot fallback** when no fine-tuned model is present, and switches to the fine-tuned model once it is installed.

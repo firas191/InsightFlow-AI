@@ -48,7 +48,9 @@ class PainPointSummarizer:
         else:
             base = f"{n} tickets this batch, {pct_neg:.0%} negative — no dominant negative theme."
 
-        abstractive = self._try_abstractive([p["text"] for p in negatives], max_words)
+        abstractive = ""
+        if CFG.get("agent", "use_generative_summary", default=False):
+            abstractive = self._try_abstractive([p["text"] for p in negatives], max_words)
         return f"{base} {abstractive}".strip() if abstractive else base
 
     def _try_abstractive(self, texts: list[str], max_words: int) -> str:

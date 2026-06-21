@@ -48,8 +48,8 @@ flowchart TD
 | Pain-point summarizer | `src/summarizer.py` | Decoder / encoder-decoder summarization |
 | Response drafter | `src/responder.py` | Scalable text generation (safe, templated) |
 | Daily Pulse report | `src/report.py` | Report Generator module |
-| Tools (search / ticket / export) | `src/tools.py` | LangChain agents + tool use |
-| Orchestration | `src/pulse_agent.py` | LangChain-style multi-step workflow |
+| Tools (search / ticket / export) | `src/tools.py` | LangChain `StructuredTool` tool use |
+| Orchestration | `src/pulse_agent.py` | LangChain LCEL Runnable pipeline (`a \| b \| c \| d`) |
 
 ## Human-in-the-loop checkpoints
 

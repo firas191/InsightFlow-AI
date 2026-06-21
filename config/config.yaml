@@ -120,6 +120,9 @@ agent:
   # category is business-sensitive.
   escalate_on_negative_sentiment: true
   priority_categories: [REFUND, PAYMENT, CANCEL, CONTACT]
+  # Structured summary is always produced. Set true to ALSO run the distilBART
+  # abstractive summary (downloads ~1.2 GB the first time).
+  use_generative_summary: false
 
 paths:
   data_dir: data
