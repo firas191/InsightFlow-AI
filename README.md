@@ -22,7 +22,7 @@ The classifier is trained on the **real [Bitext customer-support dataset](https:
 ## Repo structure
 
 ```
-InsightFlow AI 2/
+InsightFlow AI/
 ├── README.md                       # You are here
 ├── EVALUATION_REPORT.md            # Full evaluation write-up (metrics, OOD, limitations)
 ├── requirements.txt                # Python dependencies
