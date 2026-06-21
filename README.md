@@ -11,7 +11,7 @@ The Enterprise Pulse Agent runs an end-to-end pipeline over incoming support tic
 
 1. **Classify** each ticket (category, intent, sentiment) using a **fine-tuned multi-task transformer** — the trainable ML core of this project. The **routing team** is then derived from the category by rule.
 2. **Retrieve** similar historical cases via embeddings + semantic search.
-3. **Summarize** the day's top pain points with a generative model.
+3. **Summarize** the day's top pain points (structured summary by default; optional distilBART abstractive layer).
 4. **Draft** suggested responses for support agents.
 5. **Report** a concise daily pulse for managers (risks + recommended actions), with **human-review checkpoints** before anything is acted on.
 
@@ -24,12 +24,14 @@ The classifier is trained on the **real [Bitext customer-support dataset](https:
 ```
 InsightFlow AI 2/
 ├── README.md                       # You are here
+├── EVALUATION_REPORT.md            # Full evaluation write-up (metrics, OOD, limitations)
 ├── requirements.txt                # Python dependencies
 ├── config/
 │   └── config.yaml                 # Label schemas, model names, paths (single source of truth)
 ├── data/
-│   ├── generate_synthetic_data.py  # Creates labeled synthetic support tickets
-│   └── sample_tickets.csv          # Small committed sample for quick demos
+│   ├── sample_tickets.csv          # Demo input for the agent
+│   ├── historical_cases.csv        # Knowledge base for retrieval / grounded drafts
+│   └── generate_synthetic_data.py  # Legacy offline-demo data generator
 ├── notebooks/
 │   └── train_ticket_classifier.ipynb   # >>> RUN THIS ON KAGGLE (GPU) <<<
 ├── src/
@@ -37,11 +39,16 @@ InsightFlow AI 2/
 │   ├── classifier/
 │   │   ├── model.py                # Multi-task model definition (shared encoder + heads)
 │   │   └── inference.py            # Loads fine-tuned model; zero-shot fallback
-│   ├── summarizer.py               # Pain-point summarization
 │   ├── retriever.py                # Embedding + semantic search over historical cases
+│   ├── summarizer.py               # Structured summary (+ optional distilBART)
 │   ├── responder.py                # Draft response generation
 │   ├── report.py                   # Daily pulse report builder
-│   └── pulse_agent.py              # Orchestrates the full workflow
+│   ├── tools.py                    # LangChain StructuredTools (search / ticket / export)
+│   └── pulse_agent.py              # LangChain LCEL pipeline orchestration
+├── eval/
+│   ├── ood_test.csv                # Hand-labeled out-of-distribution test set
+│   └── run_ood_eval.py             # Honest OOD evaluation -> reports/ood_eval.md
+├── reports/                        # Generated daily pulse + evaluation outputs
 ├── models/
 │   └── README.md                   # Where to drop the trained model from Kaggle
 ├── app/
@@ -115,4 +122,8 @@ This system is designed with the brief's ethics requirements built in:
 See `docs/architecture.md` for the full workflow diagram and human-in-the-loop checkpoints.
 
 ---
+
+## License
+
+Released under the [MIT License](LICENSE).
 
