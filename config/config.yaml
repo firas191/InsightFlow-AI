@@ -1,0 +1,127 @@
+# =============================================================================
+# InsightFlow AI — single source of truth for label schemas, models, and paths.
+#
+# Trained on the REAL Bitext customer-support dataset (~26.9k rows). The model
+# learns three heads jointly:
+#   * category  — real Bitext label (11 classes)
+#   * intent    — real Bitext label (27 classes)
+#   * sentiment — weak-labeled by a pretrained sentiment model at train time
+# `team` is rule-based routing derived from category (not a learned head).
+# `urgency` was dropped: the real data has no honest urgency label.
+# =============================================================================
+
+project:
+  name: InsightFlow AI — Enterprise Pulse Agent
+  seed: 42
+
+# ---- Learned classification heads (multi-task) ----
+# Index order here is only used by the zero-shot fallback and for reference;
+# the fine-tuned model carries its own label order in label_maps.json.
+labels:
+  category:
+    - ACCOUNT
+    - CANCEL
+    - CONTACT
+    - DELIVERY
+    - FEEDBACK
+    - INVOICE
+    - ORDER
+    - PAYMENT
+    - REFUND
+    - SHIPPING
+    - SUBSCRIPTION
+  intent:
+    - cancel_order
+    - change_order
+    - place_order
+    - track_order
+    - change_shipping_address
+    - set_up_shipping_address
+    - check_invoice
+    - get_invoice
+    - check_payment_methods
+    - payment_issue
+    - check_refund_policy
+    - get_refund
+    - track_refund
+    - check_cancellation_fee
+    - create_account
+    - delete_account
+    - edit_account
+    - switch_account
+    - recover_password
+    - registration_problems
+    - contact_customer_service
+    - contact_human_agent
+    - complaint
+    - review
+    - delivery_options
+    - delivery_period
+    - newsletter_subscription
+  sentiment:
+    - Negative
+    - Neutral
+    - Positive
+
+# Tasks the model actually predicts (order of the learned heads).
+learned_heads: [category, intent, sentiment]
+
+# All teams tickets can be routed to.
+teams:
+  - Billing Team
+  - Account Security
+  - Logistics Team
+  - Product Team
+  - Customer Success
+
+# Rule-based routing: Bitext category -> team (applied after classification).
+category_to_team:
+  ACCOUNT: Account Security
+  CANCEL: Logistics Team
+  CONTACT: Customer Success
+  DELIVERY: Logistics Team
+  FEEDBACK: Product Team
+  INVOICE: Billing Team
+  ORDER: Logistics Team
+  PAYMENT: Billing Team
+  REFUND: Billing Team
+  SHIPPING: Logistics Team
+  SUBSCRIPTION: Customer Success
+
+# ---- Models ----
+models:
+  base_encoder: distilbert-base-uncased        # try microsoft/deberta-v3-small for more accuracy
+  classifier_dir: models/insightflow_ticket_classifier
+  zero_shot: facebook/bart-large-mnli           # fallback when no fine-tuned model is present
+  sentiment_labeler: cardiffnlp/twitter-roberta-base-sentiment-latest  # weak sentiment labels (train time)
+  summarizer: sshleifer/distilbart-cnn-12-6
+  embedder: sentence-transformers/all-MiniLM-L6-v2
+
+# ---- Training hyperparameters (read by the notebook) ----
+training:
+  max_length: 128
+  batch_size: 32
+  epochs: 3
+  lr: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.06
+  max_rows: null            # null = use all ~26.9k rows; set an int to subsample for speed
+  task_weights:
+    category: 1.0
+    intent: 1.0
+    sentiment: 0.7
+
+# ---- Agent behavior ----
+agent:
+  # Below this confidence (min over category & sentiment), flag for human triage.
+  low_confidence_threshold: 0.55
+  retrieve_k: 3
+  # A ticket escalates to the report's "risks" if sentiment is Negative OR its
+  # category is business-sensitive.
+  escalate_on_negative_sentiment: true
+  priority_categories: [REFUND, PAYMENT, CANCEL, CONTACT]
+
+paths:
+  data_dir: data
+  sample_csv: data/sample_tickets.csv
+  reports_dir: reports

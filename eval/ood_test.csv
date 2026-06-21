@@ -1,0 +1,43 @@
+ticket_id,text,category,sentiment,intent,note
+OOD-01,"cant log in, the password reset email never arrived",ACCOUNT,Negative,recover_password,
+OOD-02,"how do I change the email address on my profile",ACCOUNT,Neutral,edit_account,
+OOD-03,"please delete my account and all my personal data",ACCOUNT,Neutral,delete_account,
+OOD-04,"signup keeps failing with an error message",ACCOUNT,Negative,registration_problems,
+OOD-05,"can I merge my two accounts into a single one",ACCOUNT,Neutral,switch_account,
+OOD-06,"how do I place a large order for my whole team",ORDER,Neutral,place_order,
+OOD-07,"can you swap the size on my order before it ships",ORDER,Neutral,change_order,
+OOD-08,"I need to cancel the order I placed this morning",ORDER,Neutral,cancel_order,
+OOD-09,"wheres my order, is there a way to track it",ORDER,Neutral,track_order,
+OOD-10,"how much is the early cancellation fee on my plan",CANCEL,Neutral,check_cancellation_fee,
+OOD-11,"what delivery speeds do you offer to Europe",DELIVERY,Neutral,delivery_options,
+OOD-12,"how many days until my package actually arrives",DELIVERY,Neutral,delivery_period,
+OOD-13,"your delivery never showed up and its been three weeks",DELIVERY,Negative,delivery_period,hard
+OOD-14,"I entered the wrong shipping address, can it be corrected",SHIPPING,Neutral,change_shipping_address,
+OOD-15,"how do I save a new shipping address to my account",SHIPPING,Neutral,set_up_shipping_address,
+OOD-16,"can you email me the invoice for order 5567",INVOICE,Neutral,get_invoice,
+OOD-17,"where do I download my past invoices",INVOICE,Neutral,check_invoice,
+OOD-18,"the invoice total looks wrong, can someone check it",INVOICE,Negative,check_invoice,
+OOD-19,"my payment keeps getting declined, this is frustrating",PAYMENT,Negative,payment_issue,
+OOD-20,"do you accept apple pay or only cards",PAYMENT,Neutral,check_payment_methods,
+OOD-21,"I was charged twice for my subscription and Im annoyed",PAYMENT,Negative,payment_issue,hard
+OOD-22,"still waiting on the refund you promised two weeks ago",REFUND,Negative,track_refund,
+OOD-23,"whats your policy for refunds on opened items",REFUND,Neutral,check_refund_policy,
+OOD-24,"I want my money back for the damaged item I returned",REFUND,Negative,get_refund,
+OOD-25,"I just want to speak to a real person not a bot",CONTACT,Negative,contact_human_agent,
+OOD-26,"whats the best way to reach your support team",CONTACT,Neutral,contact_customer_service,
+OOD-27,"worst customer support experience of my life honestly",FEEDBACK,Negative,complaint,
+OOD-28,"wanted to say the new app update is fantastic",FEEDBACK,Positive,review,
+OOD-29,"the product stopped working after two days and no one helped",FEEDBACK,Negative,complaint,
+OOD-30,"thank you so much, your team sorted everything in minutes",FEEDBACK,Positive,review,
+OOD-31,"how do I unsubscribe from your weekly newsletter",SUBSCRIPTION,Neutral,newsletter_subscription,
+OOD-32,"can I pause my newsletter for a month",SUBSCRIPTION,Neutral,newsletter_subscription,
+OOD-33,"helo i cant aces my acount pls help",ACCOUNT,Negative,recover_password,typos
+OOD-34,"ORDER 8841 STILL NOT HERE WHATS HAPPENING",ORDER,Negative,track_order,caps
+OOD-35,"love the product but the checkout page crashed when i paid",PAYMENT,Negative,payment_issue,mixed
+OOD-36,"quick q - can i get a vat invoice for my company",INVOICE,Neutral,get_invoice,
+OOD-37,"need to update the card saved on my subscription",PAYMENT,Neutral,payment_issue,hard
+OOD-38,"do you ship to canada and how much does it cost",DELIVERY,Neutral,delivery_options,ambiguous
+OOD-39,"cancel my subscription please, not happy with it",SUBSCRIPTION,Negative,newsletter_subscription,hard
+OOD-40,"the refund came through, thanks for sorting it out",REFUND,Positive,track_refund,positive
+OOD-41,"can someone call me back about my account please",CONTACT,Neutral,contact_customer_service,ambiguous
+OOD-42,"five stars, super smooth experience overall",FEEDBACK,Positive,review,

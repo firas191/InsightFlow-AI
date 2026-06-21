@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Data artifacts (keep the sample, ignore generated splits)
+data/tickets_train.csv
+data/tickets_val.csv
+data/tickets_test.csv
+data/*.parquet
+
+# Model artifacts (downloaded from Kaggle — too big for git)
+models/insightflow_ticket_classifier/
+models/*.zip
+*.bin
+*.safetensors
+
+# Caches
+.cache/
+.ipynb_checkpoints/
+.DS_Store
+
+# Vector store
+data/.faiss/
+*.faiss
